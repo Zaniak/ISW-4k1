@@ -1,0 +1,5 @@
+CONVENCIÓN DE CODIGO PARA APLICAR AL PROYECTO.
+
+Fuente:
+
+https://docs.microsoft.com/es-es/dotnet/visual-basic/programming-guide/program-structure/coding-conventions
