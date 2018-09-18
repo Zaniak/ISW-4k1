@@ -288,7 +288,6 @@ if ($query->num_rows > 0) {
                         alert(request.responseText, status, error);
                     }
                 });
-                console.log(peso);
             }
         }
     }
@@ -312,13 +311,14 @@ if ($query->num_rows > 0) {
         total = 0;
         peso = 0;
         var regex = /(\d+)/g;
+        console.log(cantidad_items);
         for (i = cantidad_items; i > 0; i--) {
             var id = $('#precio_carrito' + i).parents('li').attr('id').match(regex);
             var peso_item = '#peso' + id;
             total += Number($('#precio_carrito' + i).text().match(regex)) * $('#cant_producto' + i).val();
             peso += Number($(peso_item).text().match(regex)) * $('#cant_producto' + i).val();
-            carrito();
             console.log(peso);
+            carrito();
         }
         $('#total_pedido').val(total);
     }
@@ -348,7 +348,6 @@ if ($query->num_rows > 0) {
             data['paga'] = $('#con_cuanto_abona').val();
             data['fecha'] = $('#cuando_quieres_recibirlo').val().replace('T', ' ');
             ;
-            console.log(data);
 
             $.ajax({
                 type: 'POST',
