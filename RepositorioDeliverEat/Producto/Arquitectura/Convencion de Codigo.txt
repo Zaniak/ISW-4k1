@@ -1,5 +1,1 @@
-CONVENCI�N DE CODIGO PARA APLICAR AL PROYECTO.
-
-Fuente:
-
-https://docs.microsoft.com/es-es/dotnet/visual-basic/programming-guide/program-structure/coding-conventions
+Se elimina archivo, dado que no correspondía con el lenguaje de programación implementado en el producto.
