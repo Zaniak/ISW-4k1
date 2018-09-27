@@ -28,7 +28,6 @@ if ($res != null) {
             '<div class="text-blo3 size21 flex-col-l-m">' .
             '<p class="txt21 m-b-3">' .
             $descripcion .
-            '<br>Peso:<span id="peso'.$id.'">'.$peso.'</span>'.
             '</p>' .
 
             '<span id="precio_carrito'.$cantidad_items.'" class="txt22 m-t-10">$' .

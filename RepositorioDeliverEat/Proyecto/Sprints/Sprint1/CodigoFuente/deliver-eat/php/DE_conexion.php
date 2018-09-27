@@ -2,7 +2,7 @@
 
 $host="localhost";
 $user="root";
-$password="";
+$password="lentenernes1";
 $db="de_delivereat";
 $con = new mysqli($host,$user,$password,$db);
 

@@ -31,6 +31,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/DE_util.css">
     <link rel="stylesheet" type="text/css" href="css/DE_main.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -53,16 +54,16 @@ if ($query->num_rows > 0) {
     <!-- Header desktop -->
     <div class="wrap-menu-header gradient1 trans-0-4">
         <div class="container h-full">
-        <div class="wrap_header trans-0-3">
-            <!-- Logo -->
-            <div class="logo">
-                <img src="<?php echo $comercio->logo; ?>" alt="IMG-LOGO">
-            </div>
-            <div class="social flex-w flex-l-m p-r-20">
-                <button class="btn-show-sidebar m-l-33 trans-0-4"></button>
+            <div class="wrap_header trans-0-3">
+                <!-- Logo -->
+                <div class="logo">
+                    <img src="<?php echo $comercio->logo; ?>" alt="IMG-LOGO">
+                </div>
+                <div class="social flex-w flex-l-m p-r-20">
+                    <button class="btn-show-sidebar m-l-33 trans-0-4"></button>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </header>
 
@@ -76,74 +77,149 @@ if ($query->num_rows > 0) {
     <!-- Button Hide sidebar -->
     <button class="btn-hide-sidebar ti-close color0-hov trans-0-4"></button>
 
-    <ul class="menu-sidebar p-t-95" id="carrito">
-        <div class="col-md-8 col-lg-6 m-l-r-auto text-blo3">
-            <span id="peso_carrito">El carrito tiene 0/10</span>
-        </div><br>
+    <form id="formCarrito" name="formCarrito" method="POST">
+        <ul class="menu-sidebar p-t-95" id="carrito">
 
+        </ul>
 
-    </ul>
-
-    <ul class="menu-sidebar p-t-95">
-        <li>
-            <div class="text-blo3 size12 flex-col-l-m">
+        <ul class="menu-sidebar p-t-95">
+            <li>
+                <div class="text-blo3 size12 flex-col-l-m">
                 <span class="to-left m-l-40">
                     Total
                     <input class="col-md-3 to-right m-l-250" type="number" step="0.01" id="total_pedido"
                            name="total_pedido"
                            placeholder="Total" style="display: initial;padding-right: 0px;padding-left: 0px" disabled>
                 </span>
-            </div>
-        </li>
-        <li>
-            <div class="text-blo3 size12 flex-col-l-m">
+                </div>
+            </li>
+            <li>
+                <div class="text-blo3 size12 flex-col-l-m">
                 <span class="to-left m-l-40" style="width:100%">
                     Forma de Pago
-                    <select class="col-md-5 to-right m-l-95" id="forma_pago" name="forma_pago"
+                    <select class="form-control col-md-5 to-right m-l-95" id="forma_pago" name="forma_pago" required
+                            title="seleccione una opcion."
                             style="display: initial;padding-right: 0px;padding-left: 0px">
+                        <option value="">Seleccionar..</option>
                         <option value="2">Efectivo</option>
                         <option value="1">Visa</option>
                     </select>
                 </span>
-            </div>
-        </li>
-        <li>
-            <div class="text-blo3 size12 flex-col-l-m">
+                </div>
+            </li>
+            <!-- seleccionar efectivo -->
+            <li class="group_efectivo" style="display: none;">
+                <div class="text-blo3 size12 flex-col-l-m">
                 <span class="to-left m-l-40">
                     Con cuanto abona
-                    <input class="col-md-5 to-right m-l-90" type="number" step="0.01" id="con_cuanto_abona"
-                           name="con_cuanto_abona"
-                           placeholder="Con cuanto abona" style="display: initial;padding-right: 0px;padding-left: 0px">
+                    <input type="text" class="form-control efectivo col-md-5 to-right m-l-95" id="monto_efectivo"
+                           name="monto_efectivo" pattern="([0-9]*){0,7}" title="Solo se aceptan números."
+                           style="display: initial;padding-right: 0px;padding-left: 0px"
+                           placeholder="Con cuanto abona">
                 </span>
-            </div>
-        </li>
-        <li>
-            <div class="text-blo3 size12 flex-col-l-m">
+                </div>
+            </li>
+            <!-- seleccionar VISA -->
+            <li class="group_visa" style="display: none;">
+                <div class="text-blo3 size12 flex-col-l-m">
+                <span class="to-left m-l-40 m-r-3">
+                    Código de tarjeta:
+                    <input type="text" class="visa form-control col-md-5 to-right m-l-105" id="codigo_tarjeta"
+                           name="codigo_tarjeta" placeholder="16 dígitos sin espacios" pattern="[0-9]{16}"
+                           title="Solo se acepta un número de 16 dígitos."
+                           style="display: initial;padding-right: 0px;padding-left: 0px">
+                </span>
+                </div>
+            </li>
+            <li class="group_visa" style="display: none;">
+                <div class="text-blo3 size12 flex-col-l-m">
+                <span class="to-left m-l-40">
+                    Fecha de vencimiento:
+                    <input type="text" class="visa form-control col-md-2 text-center m-l-175" id="vencimiento_tarjeta"
+                           name="vencimiento_tarjeta" value="00/00" title="Solo se aceptan números." readonly
+                           style="text-align:center; display: initial;padding-right: 0px;padding-left: 0px">
+                </span>
+                </div>
+            </li>
+            <li class="group_visa" style="display: none;">
+                <div class="text-blo3 size12 flex-col-l-m">
+                <span class="to-left m-l-40">
+                    Nombre completo:
+                    <input type="text" class="visa form-control col-md-5 to-right m-l-95" id="nombre_tarjeta"
+                           name="nombre_tarjeta" placeholder="como sale en su tarjeta" pattern="^[a-zA-Z ]*$"
+                           title="Solo se aceptan letras."
+                           style="display: initial;padding-right: 0px;padding-left: 0px">
+                </span>
+                </div>
+            </li>
+            <li class="group_visa" style="display: none;">
+                <div class="text-blo3 size12 flex-col-l-m">
+                <span class="to-left m-l-40">
+                    Código de seguridad:
+                    <input type="text" class="visa form-control col-md-2 to-right m-l-185" id="codigo_seguridad"
+                           name="codigo_seguridad" placeholder="3 dígitos" pattern="[0-9]{3}"
+                           title="Solo se acepta un número de 3 dígitos."
+                           style="display: initial;padding-right: 0px;padding-left: 0px">
+                </span>
+                </div>
+            </li>
+            <li>
+                <div class="text-blo3 size12 flex-col-l-m">
                 <span class="to-left m-l-40">
                     Domicilio de Entrega
-                    <input class="col-md-5 to-right m-l-65" type="text" id="domicilio" name="domicilio"
+                    <input class="form-control col-md-5 to-right m-l-75" type="text" id="domicilio" name="domicilio"
                            placeholder="Av. J. B. Justo N° XXXX"
                            style="display: initial;padding-right: 0px;padding-left: 0px">
                 </span>
-            </div>
-        </li>
-        <li>
-            <div class="text-blo3 size12 flex-col-l-m">
-                <span class="to-left m-l-40" style="width: 100%">
-                    Cuando quieres recibirlo
-                    <input class="col-md-5 to-right m-l-39" type="datetime-local" id="cuando_quieres_recibirlo"
-                           name="cuando_quieres_recibirlo"
-                           placeholder="Cuando quieres recibirlo"
-                           style="display: initial;padding-right: 0px;padding-left: 0px">
+                </div>
+            </li>
+            <li>
+                <div class="text-blo3 size12 flex-col-l-m">
+                <span class="to-left m-l-40" style="width:100%">
+                    Tipo de Envio
+                    <select class="form-control col-md-5 to-right m-l-95" id="tipo_pago" name="tipo_pago"
+                            title="seleccione una opcion."
+                            style="display: initial;padding-right: 0px;padding-left: 0px">
+                        <option value="">Seleccionar..</option>
+                        <option value="envio_normal">Normal</option>
+                        <option value="envio_cuanto_antes">Lo antes posible</option>
+                    </select>
                 </span>
-            </div>
-        </li>
-        <li class="btn-completar-pedido">
-            <button type="submit" class="btn3 flex-c-m size18 txt11 trans-0-4 m-t-40 m-b-50" onclick="guardarPedido()">
-                Completar Pedido
-            </button>
-        </li>
-    </ul>
+                </div>
+            </li>
+            <li class="group_fecha_entrega" style="display: none;">
+                <div class="text-blo3 size12 flex-col-l-m">
+                <span class="to-left m-l-40">
+                    Fecha de entrega:
+                    <input type="text" class="form-control col-md-3 text-center m-l-170" id="fecha_entrega"
+                           value="<?php echo date(" d/m/Y "); ?>" required readonly
+                           style="text-align:center; display: initial;padding-right: 0px;padding-left: 0px">
+                </span>
+                </div>
+            </li>
+            <li class="group_fecha_entrega" style="display: none;">
+                <div class="text-blo3 size12 flex-col-l-m">
+                    <div class="row to-left m-l-40">
+                        Hora de entrega:
+                        <div class="col-2 m-l-150">
+                            <input type="text" class="form-control" id="hr_entrega" placeholder="hh" pattern="[0-9]{2}"
+                                   title="Solo nro" required>
+                        </div>
+                        :
+                        <div class="col-2">
+                            <input type="text" class="form-control" id="min_entrega" placeholder="mm" pattern="[0-9]{2}"
+                                   title="Solo nro" required>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="btn-completar-pedido">
+                <input type="submit" id="boton_submit" class="btn3 flex-c-m size18 txt11 trans-0-4 m-t-40 m-b-50"
+                       value="Completar Pedido"
+                />
+            </li>
+        </ul>
+    </form>
 </aside>
 
 <!-- Title Page -->
@@ -255,40 +331,41 @@ if ($query->num_rows > 0) {
 <!--===============================================================================================-->
 <script src="js/DE_main.js"></script>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
+    $("#formCarrito").submit(function (event) {
+        event.preventDefault();
+        guardarPedido();
+    });
     var cantidad_items = 0;
     var total = 0;
-    var peso = 0;
+
 
     function agregarAlCarrito(boton) {
         let id = boton.id;
         var div_cont = '#div' + id;
-        if (peso >= 10) {
-            alert("El carrito esta lleno");
+        if ($(div_cont).length > 0) {
+            alert("La comida que intenta agregar ya esta en su carrito");
         }
         else {
-            if ($(div_cont).length > 0) {
-                alert("La comida que intenta agregar ya esta en su carrito");
+            cantidad_items++;
+            var data = {
+                "id": id,
+                "cantidad_items": cantidad_items
             }
-            else {
-                cantidad_items++;
-                console.log(cantidad_items);
-                var data = {
-                    "id": id,
-                    "cantidad_items": cantidad_items
+            $.ajax({
+                type: 'POST',
+                data: {data: data},
+                url: './php/DE_agregarProductoAlCarrito.php',
+                success: function (response) {
+                    $('#carrito').append(response);
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText, status, error);
                 }
-                $.ajax({
-                    type: 'POST',
-                    data: {data: data},
-                    url: './php/DE_agregarProductoAlCarrito.php',
-                    success: function (response) {
-                        $('#carrito').append(response);
-                    },
-                    error: function (request, status, error) {
-                        alert(request.responseText, status, error);
-                    }
-                });
-            }
+            });
         }
     }
 
@@ -298,11 +375,7 @@ if ($query->num_rows > 0) {
         let id = boton.id;
         var str = id.match(regex);
         var idli = '#li' + str;
-        var peso_item = '#peso' + str;
-        console.log(peso_item);
-        console.log($(peso_item).text());
         peso -= Number($(peso_item).text().match(regex));
-        carrito();
         restarTotal(str);
         $(idli).remove();
     }
@@ -311,14 +384,9 @@ if ($query->num_rows > 0) {
         total = 0;
         peso = 0;
         var regex = /(\d+)/g;
-        console.log(cantidad_items);
         for (i = cantidad_items; i > 0; i--) {
             var id = $('#precio_carrito' + i).parents('li').attr('id').match(regex);
-            var peso_item = '#peso' + id;
             total += Number($('#precio_carrito' + i).text().match(regex)) * $('#cant_producto' + i).val();
-            peso += Number($(peso_item).text().match(regex)) * $('#cant_producto' + i).val();
-            console.log(peso);
-            carrito();
         }
         $('#total_pedido').val(total);
     }
@@ -330,54 +398,100 @@ if ($query->num_rows > 0) {
     }
 
     function guardarPedido() {
-        if(peso < 10)
-        {
-            var data = {
-                "id": 1,
-                "cantidad_items": cantidad_items
-            }
-            for (i = cantidad_items; i > 0; i--) {
-                var regex = /(\d+)/g;
-                var id = $('#precio_carrito' + i).parents('li').attr('id').match(regex);
-                data['id_producto' + i] = id[0];
-                data['cantidad' + i] = $('#cant_producto' + i).val();
-                data['precio' + i] = Number($('#precio_carrito' + i).text().match(regex));
-            }
-            data['forma_pago'] = $('#forma_pago').val();
-            data['domicilio'] = $('#domicilio').val();
-            data['paga'] = $('#con_cuanto_abona').val();
-            data['fecha'] = $('#cuando_quieres_recibirlo').val().replace('T', ' ');
-            ;
-
-            $.ajax({
-                type: 'POST',
-                data: {data: data},
-                url: './php/DE_confirmarPedido.php',
-                success: function (response) {
-                    alert("Pedido confirmado");
-                    window.location = "./DE_index.php";
-                },
-                error: function (request, status, error) {
-                    alert(request.responseText, status, error);
-                }
-            });
+        var data = {
+            "id": 1,
+            "cantidad_items": cantidad_items
         }
-        else{
-            alert("No se puede guardar el pedido, porque el carrito esta lleno");
+        for (i = cantidad_items; i > 0; i--) {
+            var regex = /(\d+)/g;
+            var id = $('#precio_carrito' + i).parents('li').attr('id').match(regex);
+            data['id_producto' + i] = id[0];
+            data['cantidad' + i] = $('#cant_producto' + i).val();
+            data['precio' + i] = Number($('#precio_carrito' + i).text().match(regex));
+        }
+        data['forma_pago'] = $('#forma_pago').val();
+        data['domicilio'] = $('#domicilio').val();
+
+        if ($('#tipo_pago').val() == "envio_normal") {
+            fecha = $('#fecha_entrega').val() + $('#hr_entrega').val() + ":" + $('#min_entrega').val();
+            data['fecha'] = fecha;
+        } else {
+            data['fecha'] = "lo antes posible";
         }
 
-    }
-    function carrito(){
-        if(peso >= 10)
-        {
-            $('#peso_carrito').text("El carrito esta lleno!!")
-            $('#peso_carrito').css("color", "red");
+        if ($('#monto_efectivo').val() == "") {
+            data['paga'] = "null";
+        } else {
+            data['paga'] = $('#monto_efectivo').val();
         }
-        else{
-            $('#peso_carrito').text("El carrito tiene "+peso+"/10")
-            $('#peso_carrito').css("color", "black");
+
+        if ($('#codigo_seguridad').val() == "") {
+            data['cod_tarjeta'] = "null";
+        } else {
+            data['cod_tarjeta'] = $('#codigo_seguridad').val();
         }
+
+        if ($('#codigo_tarjeta').val() == "") {
+            data['num_tarjeta'] = "null";
+        } else {
+            data['num_tarjeta'] = $('#codigo_seguridad').val();
+        }
+
+        data['nombre_tarjeta'] = $('#nombre_tarjeta').val();
+        data['vencimiento_tarjeta'] = $('#vencimiento_tarjeta').val();
+
+        $.ajax({
+            type: 'POST',
+            data: {data: data},
+            url: './php/DE_confirmarPedido.php',
+            success: function (response) {
+                alert(response);
+                console.log(response);
+                alert("Pedido confirmado");
+            }
+        });
+
     }
+
+    $(function () {
+        $("#fecha_entrega").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+
+    $(function () {
+        $("#vencimiento_tarjeta").datepicker({
+            dateFormat: 'mm/yy'
+        });
+    });
+
+    $("#tipo_pago").change(function () {
+        if ($("#tipo_pago").val() == 'envio_normal') {
+            $(".group_fecha_entrega, .group_hora_entrega ").show();
+            $('#fecha_entrega, #hr_entrega, #min_entrega').attr('required', true);
+        } else {
+            $(".group_fecha_entrega, .group_hora_entrega ").hide();
+            $('#fecha_entrega, #hr_entrega, #min_entrega').attr('required', false);
+        }
+    });
+
+    $("#forma_pago").change(function () {
+        if ($("#forma_pago").val() == '2') {
+            $('#monto_efectivo').val('');
+            $('.group_efectivo').show();
+            $('.group_visa').hide();
+            $('.visa').attr('required', false);
+            $('.efectivo').attr('required', true);
+        } else {
+            $('#monto_efectivo').val('');
+            $('.group_efectivo').hide();
+            $('.group_visa').show();
+            $('.visa').attr('required', true);
+            $('.efectivo').attr('required', false);
+        }
+
+    });
+
 </script>
 
 </body>

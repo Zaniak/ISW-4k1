@@ -7,6 +7,10 @@ if (!empty($_POST)) {
     $domicilio = $obj['domicilio'];
     $paga = $obj['paga'];
     $fecha = $obj['fecha'];
+    $nombre_tarjeta = $obj['nombre_tarjeta'];
+    $numero_tarjeta = $obj['num_tarjeta'];
+    $cod_tarjeta = $obj['cod_tarjeta'];
+    $vencimiento_tarjeta = $obj['vencimiento_tarjeta'];
     $id = $obj['id'];
 
     for ($i=$obj["cantidad_items"]; $i>0; $i--)
@@ -20,8 +24,10 @@ if (!empty($_POST)) {
 
 
 
-    $sql2 = "INSERT INTO t_pedido(id_detalle_pedido, id_forma_de_pago, fecha_hora, domicilio_de_entrega, fecha_hora_entrega, con_cuanto_paga)
-VALUES ($id,$forma_pago,NOW(),'".$domicilio."','".$fecha."',$paga)";
-    $resultado = $con->query($sql2);
+    $sql2 = "INSERT INTO t_pedido(id_detalle_pedido,id_forma_de_pago,fecha_hora,domicilio_de_entrega, 
+    fecha_hora_entrega,con_cuanto_paga,cod_tarjeta,cod_seguridad_tarjeta,nombre_tarjeta,vencimiento_tarjeta)
+    VALUES ($id,$forma_pago,NOW(),'".$domicilio."','".$fecha."',$paga,$numero_tarjeta,$cod_tarjeta,'".$nombre_tarjeta."','".$vencimiento_tarjeta."')";
+        $resultado = $con->query($sql2);
+        echo $sql2;
 }
 ?>
