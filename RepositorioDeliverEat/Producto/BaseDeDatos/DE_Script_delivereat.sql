@@ -76,8 +76,8 @@ create table if not exists t_productos
 charset=latin1
 ;
 
-INSERT INTO t_comercio_adherido(nombre, descripcion, direccion, imagen_url)
-VALUES ('Pato Restaurant', 'Comida Asiatica', 'Obispo Salguero 115', 'images/icons/logo.png');
+INSERT INTO `t_comercio_adherido` (`nombre`, `descripcion`, `direccion`, `imagen_url`, `imagen_url_grande`)
+VALUES ('Pato Restaurant', 'Comida Asiatica', 'Obispo Salguero 115', 'images/icons/logo2.png', 'images/DE_img_restaurant.jpg');
 
 INSERT INTO t_productos(id_comercio, descripcion, nombre, precio, peso, imagen_url)
 VALUES (1,'Pollo Asado para 4 personas con Fritas','Pollo Asado', 350, 3, 'images/producto-1.jpg');
