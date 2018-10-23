@@ -32,15 +32,26 @@
     <link rel="stylesheet" type="text/css" href="css/DE_util.css">
     <link rel="stylesheet" type="text/css" href="css/DE_main.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance:textfield;
+        }
+    </style>
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
 <?php
-include "./php/DE_conexion.php";
+include "./php/DE_Conexion.php";
 $sql1 = "SELECT C.nombre AS nombre, C.descripcion AS descripcion,C.imagen_url AS logo,
           C.imagen_url_grande AS imagen
           FROM t_comercio_adherido C WHERE C.id_comercio = 1;";
-$query = $con->query($sql1);
+$query = $conexion->query($sql1);
 $comercio = null;
 if ($query->num_rows > 0) {
     while ($r = $query->fetch_object()) {
@@ -251,12 +262,12 @@ if ($query->num_rows > 0) {
                         <!-- Block3 -->
 
                         <?php
-                        include "./php/DE_conexion.php";
+                        include "./php/DE_Conexion.php";
                         $sql2 = "SELECT P.id_producto AS id_producto, P.nombre AS nombre_producto,
-                              P.descripcion AS descripcion_producto, P.precio AS precio_producto, P.peso AS peso_producto,
+                              P.descripcion AS descripcion_producto, P.precio AS precio_producto,
                               P.imagen_url AS imagen_producto
                               FROM t_productos P WHERE P.id_comercio = 1;";
-                        $query2 = $con->query($sql2);
+                        $query2 = $conexion->query($sql2);
                         if ($query->num_rows > 0) {
                             while ($r = $query2->fetch_object()) {
                                 ?>
@@ -361,39 +372,36 @@ if ($query->num_rows > 0) {
                 url: './php/DE_agregarProductoAlCarrito.php',
                 success: function (response) {
                     $('#carrito').append(response);
-                },
-                error: function (request, status, error) {
-                    alert(request.responseText, status, error);
                 }
             });
         }
     }
 
     function quitar(boton) {
-        cantidad_items--;
         var regex = /(\d+)/g;
         let id = boton.id;
         var str = id.match(regex);
         var idli = '#li' + str;
-        peso -= Number($(peso_item).text().match(regex));
-        restarTotal(str);
         $(idli).remove();
+        sumarTotal();
+    }
+
+    function sumarSubtotal(boton) {
+        var regex = /(\d+)/g;
+        let id = boton.id;
+        var str = id.match(regex);
+        var subtotal = Number($('#precio_carrito' + str).text().match(regex)) * $('#cant_producto' + str).val();
+        $('#subtotal' + str).val(subtotal);
+        sumarTotal();
     }
 
     function sumarTotal() {
         total = 0;
-        peso = 0;
         var regex = /(\d+)/g;
-        for (i = cantidad_items; i > 0; i--) {
-            var id = $('#precio_carrito' + i).parents('li').attr('id').match(regex);
-            total += Number($('#precio_carrito' + i).text().match(regex)) * $('#cant_producto' + i).val();
-        }
-        $('#total_pedido').val(total);
-    }
-
-    function restarTotal(i) {
-        var regex = /(\d+)/g;
-        total -= Number($('#precio_carrito' + i).text().match(regex)) * $('#cant_producto' + i).val();
+        $(".subtotal").each(function (index) {
+            console.log(index);
+            total += Number($(this).val());
+        });
         $('#total_pedido').val(total);
     }
 
