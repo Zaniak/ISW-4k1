@@ -397,9 +397,7 @@ if ($query->num_rows > 0) {
 
     function sumarTotal() {
         total = 0;
-        var regex = /(\d+)/g;
         $(".subtotal").each(function (index) {
-            console.log(index);
             total += Number($(this).val());
         });
         $('#total_pedido').val(total);
@@ -454,7 +452,6 @@ if ($query->num_rows > 0) {
             url: './php/DE_confirmarPedido.php',
             success: function (response) {
                 alert(response);
-                console.log(response);
                 alert("Pedido confirmado");
             }
         });

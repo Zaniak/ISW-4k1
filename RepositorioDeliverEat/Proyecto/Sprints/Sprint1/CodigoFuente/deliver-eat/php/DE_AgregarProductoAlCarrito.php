@@ -20,37 +20,37 @@ if ($resultado != null) {
         $descripcion = $fila["nombre_producto"];
         $html=
             '<li id="li'.$id_producto.'" class="t-center">' .
-                '<div class="blo3 flex-w flex-col-l-sm m-b-30 p-r-30 p-l-30" id="div'.$id_producto.'">' .
-                    '<input class="subtotal" id="subtotal'.$cantidad_items.'" hidden>'.
-                    '<div class="pic-blo3 size20 bo-rad-10 hov-img-zoom m-r-28">' .
-                        '<img src="'.$imagen.'" alt="IMG-MENU"></a>' .
-                    '</div>' .
+            '<div class="blo3 flex-w flex-col-l-sm m-b-30 p-r-30 p-l-30" id="div'.$id_producto.'">' .
+            '<input class="subtotal" id="subtotal'.$cantidad_items.'" hidden>'.
+            '<div class="pic-blo3 size20 bo-rad-10 hov-img-zoom m-r-28">' .
+            '<img src="'.$imagen.'" alt="IMG-MENU"></a>' .
+            '</div>' .
 
-                    '<div class="text-blo3 size21 flex-col-l-m">' .
+            '<div class="text-blo3 size21 flex-col-l-m">' .
 
-                        '<p class="txt21 m-b-3">' .
-                            $descripcion .
-                        '</p>' .
+            '<p class="txt21 m-b-3">' .
+            $descripcion .
+            '</p>' .
 
-                        '<span id="precio_carrito'.$cantidad_items.'" class="txt22 m-t-10">$' .
-                            $precio .
-                        '</span>' .
+            '<span id="precio_carrito'.$cantidad_items.'" class="txt22 m-t-10">$' .
+            $precio .
+            '</span>' .
 
-                        '<span class="txt22 m-t-10">' .
+            '<span class="txt22 m-t-10">' .
 
-                            '<input class="col-md-3 to-right form-control" type="number" 
+            '<input class="col-md-3 to-right form-control" type="number" 
                             id="cant_producto'.$cantidad_items.'" name="cant_producto" placeholder="Cantidad" 
                             style="display: initial;padding-right: 0px;padding-left: 0px;" 
                             onchange="sumarSubtotal(this)" onkeyup="sumarSubtotal(this)">' .
 
-                            '<button id="quitar'.$id.'" type="button" class="m-l-20 btn3 flex-c-m size18 txt11 trans-0-4" 
+            '<button id="quitar'.$id.'" type="button" class="m-l-20 btn3 flex-c-m size18 txt11 trans-0-4" 
                             style="display: initial;" onclick="quitar(this)">' .
-                            'Quitar' .
-                            '</button>' .
+            'Quitar' .
+            '</button>' .
 
-                        '</span>' .
-                    '</div>' .
-                '</div>' .
+            '</span>' .
+            '</div>' .
+            '</div>' .
             '</li>';
         echo $html;
     }
