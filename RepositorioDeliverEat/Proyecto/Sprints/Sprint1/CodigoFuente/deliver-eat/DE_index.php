@@ -369,7 +369,7 @@ if ($query->num_rows > 0) {
             $.ajax({
                 type: 'POST',
                 data: {data: data},
-                url: './php/DE_agregarProductoAlCarrito.php',
+                url: './php/DE_AgregarProductoAlCarrito.php',
                 success: function (response) {
                     $('#carrito').append(response);
                 }
@@ -449,7 +449,7 @@ if ($query->num_rows > 0) {
         $.ajax({
             type: 'POST',
             data: {data: data},
-            url: './php/DE_confirmarPedido.php',
+            url: './php/DE_ConfirmarPedido.php',
             success: function (response) {
                 alert(response);
                 alert("Pedido confirmado");
